@@ -1,24 +1,32 @@
 import { PrismaClient, User } from "@prisma/client"
 
 class UserController {
+    
     private prisma: PrismaClient;
 
     constructor() {
-        this.prisma = new PrismaClient;
+        this.prisma = new PrismaClient();
     }
 
-    async create(data: Omit<User, "id">) {
-        try {
-            return this.prisma.user.create({
-                data: {
-                    ...data,
-                },
-            });
+    async createUser(data: Omit<User, "id">) {
+        const newUser = await this.prisma.user.create({
+            data: {
+                ...data
+            }
+        })
 
-        } catch(e) {
-            return e;
-        }
+        return newUser;
+    }
+
+    async getUserById(id: string) {
+        const searchUser = await this.prisma.user.findUnique({
+            where: {
+                id: id,
+            },
+        });
+
+        return searchUser;
     }
 }
 
-export default UserController
+export default UserController;
