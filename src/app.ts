@@ -1,14 +1,10 @@
-import UserController from "./controllers/UserController";
+import express from "express";
+import routes from "./routes";
 
-async function main() {
-    const userControl = new UserController;
-    
-    const user = await userControl.create({
-        name: "Bruno",
-        email: "teste@gamil.com"
-    });
+const app = express();
 
-    console.log(user);
-}
+app.use(express.json());
 
-main();
+routes(app);
+
+export default app;

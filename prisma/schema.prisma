@@ -14,4 +14,14 @@ model User {
   id    String @id @default(uuid())
   name  String
   email String @unique
+  tasks Task[]
+}
+
+model Task {
+  taskId    Int       @id @default(autoincrement())
+  title     String
+  text      String
+  status    Boolean   @default(false)
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [id])
 }
